@@ -1,2 +1,2 @@
-# My-movies
-Do you forget informations about your movie watching like episodes or time? if this so, this program is yours! Made by python
+Never change the information of "Movie.ini" file and Don't add any file to this folder
+thanks for using my program<3
