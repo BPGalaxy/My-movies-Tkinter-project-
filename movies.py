@@ -15,6 +15,8 @@ window.maxsize(285, 285)
 window.title('movie')
 config = configparser.ConfigParser()
 directory = str(os.getcwd()) + "\movie.ini"
+config.read(directory)
+auth = config["Settings"]["auth"]
 
 config.read(directory)
 Len1 = 0
@@ -818,11 +820,7 @@ def main():
 
                 else:
                     config[name] = {'date added': date_added, 'session': v_session, 'episode': v_episode, 'time': v_time}
-                    auth = config.get('Settings', 'auth')
-                    file = open(directory, 'w')
-                    file.write(auth)
-                    file.close()
-                    with open(directory, 'a') as config_file:
+                    with open(directory, 'w') as config_file:
                         config.write(config_file)
                     showinfo('Saved', 'New movie added to list successfully')
                     session.destroy()
@@ -1032,11 +1030,7 @@ def main():
 
                     else:
                         config[movie] = {'date added':v_date_added,'session': v_session, 'episode': v_episode, 'time': v_time}
-                        auth = config.get('Settings', 'auth')
-                        file = open(directory, 'w')
-                        file.write(auth)
-                        file.close()
-                        with open(directory, 'a') as config_file:
+                        with open(directory, 'w') as config_file:
                             config.write(config_file)
                         showinfo('Saved', 'Changes saved successfully')
                         session.destroy()
@@ -1160,7 +1154,7 @@ def main():
                          activeforeground=bg_color, command=lambda: update(choice))
             b_2 = Button(window, text='Delete this movie from list', fg=fg_color, bg=bg_color,
                          activebackground=fg_color, activeforeground=bg_color, command=lambda: delete(choice))
-            b_1.pack(anchor='s', pady=(60, 0))
+            b_1.pack(anchor='s', pady=(67, 0))
             b_2.pack(anchor='s')
 
             b_1.bind('<Enter>', func=lambda e: b_1.config(bg=fg_color, fg=bg_color))
@@ -1272,7 +1266,7 @@ def Setting():
             if file == '':
                 window.destroy()
 
-            elif "Movie.ini" in file and '#Database of "My movies" app' in open(file, 'r').read():
+            elif "Movie.ini" in file and f'{auth}' in open(file, 'r').read():
                 shutil.copyfile(file, directory)
                 showinfo('copy', 'Datas recovered successfully')
                 config.read('"G:/Alireza/Programing/#Files/PythonFiles/Movie.ini')
@@ -1293,7 +1287,7 @@ def Setting():
             showinfo("Recovery", f"This app will make another database automatically\nBut your data will be removed")
             f = open(directory, 'x')
             f.write(
-                '#Database of "My movies" app\n[Settings]\nbg_color = snow\nfg_color = gainsboro\nfont = Arial\nbackup_dir = none')
+                f'\n[Settings]\nbg_color = snow\nfg_color = gainsboro\nfont = Arial\nbackup_dir = none\nauth = {auth}')
             f.close()
             config.read(directory)
             bg_color = config['Settings']['bg_color']
@@ -1307,7 +1301,7 @@ def Setting():
         global fg_color
         global font
         config.read(directory)
-        if '#Database of "My movies" app' in open(directory, 'r').read():
+        if f'{auth}' in open(directory, 'r').read():
             if config['Settings']['backup_dir'] == 'none':
                 showinfo('Backup dir',
                          'You must select a directory to app be able to make auto backup from your datas there')
@@ -1320,10 +1314,6 @@ def Setting():
                 window.configure(bg=bg_color)
                 return main()
         else:
-            backuptext = open(directory, 'r').read()
-            file = open(directory, 'w')
-            file.write(f'#Database of "My movies" app\n{backuptext}')
-            file.close()
             if config['Settings']['backup_dir'] == 'none':
                 showinfo('Backup dir',
                          'You must select a directory to app be able to make auto backup from your datas there')
