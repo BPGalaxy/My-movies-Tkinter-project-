@@ -1,0 +1,7 @@
+How to update the app without losing pervious data?
+ Just download the rar file, extract the exe file and replace it with the pervious one. also put UpdateDB.py file in the same folder and then run it. (Don't put the Movie.db file in your app folder)
+ It'll automatically read your data from the pervious db (.ini file) and then move them all to a SQL db and then delete the .ini file
+ !!Make sure the .ini file is in the same directory before launching the new .exe version or it'll automatically create a new SQL db file and your datas will be gone!!
+
+But if you're new you can exctract everything and then run the .exe file and use the app.
+(You don't need UpdateDB.py you can not extract it.)
